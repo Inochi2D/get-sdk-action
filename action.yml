@@ -1,16 +1,14 @@
-name: 'Setup Inochi2D SDK'
-on:
-  workflow_call:
-    inputs:
-      tag:
-        required: false
-        description: 'Tag of SDK to fetch.'
-        type: string
-        default: 'latest'
-      sdk:
-        required: true
-        description: 'Specific SDK to fetch.'
-        type: string
+name: 'Install Inochi2D SDK'
+inputs:
+  tag:
+    required: false
+    description: 'Tag of SDK to fetch.'
+    type: string
+    default: 'latest'
+  sdk:
+    required: true
+    description: 'Specific SDK to fetch.'
+    type: string
 runs:
   using: "composite"
   steps:
