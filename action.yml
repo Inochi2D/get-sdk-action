@@ -13,14 +13,16 @@ runs:
   using: "composite"
   steps:
     - name: 'Install ${{ inputs.sdk }} toolchain...'
-      if: ${{ runner.os == 'Linux' }}
       shell: bash
       run: |
         wget https://github.com/Inochi2D/sdk-toolchain/releases/download/${{ inputs.tag }}/${{ inputs.sdk }}.tar.gz
-        tar -xf ${{ inputs.sdk }}.tar.gz -C ${{ runner.tool_cache }}
+        tar -xf ${{ inputs.sdk }}.tar.gz -C ${{ runner.tool_cache }} &> /dev/null
+        if [ -f '${{ runner.tool_cache }}/ci_postinstall.sh' ]; do
+          chmod +x ${{ runner.tool_cache }}/ci_postinstall.sh
+          source ${{ runner.tool_cache }}/ci_postinstall.sh
+        done 
 
     - name: 'Add ${{ inputs.sdk }} to PATH...'
-      if: ${{ runner.os == 'Linux' }}
       shell: bash
       run: |
-        echo "${{ runner.tool_cache }}/ldc2/bin:${{ runner.tool_cache }}/ldc2/lib:$GITHUB_PATH" >> $GITHUB_PATH
+        echo "${{ runner.tool_cache }}/ldc2/bin:${{ runner.tool_cache }}/ldc2/lib" >> $GITHUB_PATH
