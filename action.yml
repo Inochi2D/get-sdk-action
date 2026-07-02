@@ -17,10 +17,9 @@ runs:
       run: |
         wget https://github.com/Inochi2D/sdk-toolchain/releases/download/${{ inputs.tag }}/${{ inputs.sdk }}.tar.gz
         tar -xf ${{ inputs.sdk }}.tar.gz -C ${{ runner.tool_cache }} &> /dev/null
-        if [ -f '${{ runner.tool_cache }}/ci_postinstall.sh' ]; do
-          chmod +x ${{ runner.tool_cache }}/ci_postinstall.sh
-          source ${{ runner.tool_cache }}/ci_postinstall.sh
-        done 
+        if [ -f '$RUNNER_TOOL_CACHE/ci_postinstall.sh' ]; then
+          source $RUNNER_TOOL_CACHE/ci_postinstall.sh
+        fi 
 
     - name: 'Add ${{ inputs.sdk }} to PATH...'
       shell: bash
